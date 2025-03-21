@@ -9,16 +9,14 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static("public"));
 
-// AI生成作文接口，调用 DeepSeek API
 app.post("/generate", async (req, res) => {
     const { name, studentId, topic, tone } = req.body;
-
-    // 参数验证
+    
     if (!name || !studentId || !topic || !tone) {
         return res.status(400).json({ error: "缺少必要参数" });
     }
 
-    // 构造提示词
+  
     const prompt = `${name}（学号${studentId}）因为${topic}，需要给沈坚写一篇小作文。请用“${tone}”的语气，生成一篇合适的作文不要在最后加时间。`;
 
     try {
@@ -37,12 +35,12 @@ app.post("/generate", async (req, res) => {
         });
 
         if (!response.ok) {
-            // 添加HTTP状态码的错误处理
+        
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         const data = await response.json();
-        // 检查返回数据是否正确
+     
         if (data.choices && data.choices[0] && data.choices[0].message) {
             res.json({ essay: data.choices[0].message.content });
         } else {
