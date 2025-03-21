@@ -99,18 +99,11 @@ h2 {
 }
 
 /* 🌟 加载动画 */
-.loading::after {
-    content: "✏️ 正在生成，请稍等...";
-    display: inline-block;
-    animation: dots 1.5s steps(3, end) infinite;
-}
-
-/* 加载点点点动画 */
-@keyframes dots {
-    0% { content: "✏️ 正在生成，请稍等"; }
-    33% { content: "✏️ 正在生成，请稍等."; }
-    66% { content: "✏️ 正在生成，请稍等.."; }
-    100% { content: "✏️ 正在生成，请稍等..."; }
+#loading {
+    font-size: 1.2em;
+    color: #4caf50;
+    text-align: center;
+    margin-top: 15px;
 }
 
 /* 🌟 页面淡入动画 */

@@ -1,24 +1,28 @@
 async function generateEssay() {
+    // 1️⃣ 获取输入框的值
     const name = document.getElementById("name").value.trim();
     const studentId = document.getElementById("studentId").value.trim();
-    const topic = document.getElementById("topic").value;
-    const tone = document.getElementById("tone").value;
+    const topic = document.getElementById("topic").value.trim();
+    const tone = document.getElementById("tone").value.trim();
     const result = document.getElementById("result");
     const button = document.querySelector("button");
+    const loading = document.getElementById("loading");
 
-    // 1️⃣ 检查名字和学号是否填写
-    if (!name || !studentId) {
-        result.innerText = "⚠️ 请填写名字和学号！";
+    // 2️⃣ 检查所有必要字段是否填写
+    if (!name || !studentId || !topic || !tone) {
+        result.innerText = "⚠️ 请填写所有字段！";
         return;
     }
 
-    // 2️⃣ 防止重复点击 & 启动加载动画
+    // 3️⃣ 防止重复点击 & 启动加载动画
     button.disabled = true;
     button.innerText = "生成中...";
-    result.innerHTML = "<p>正在生成，请稍等...</p>";
+    result.innerText = "";  // 清空上次的结果
+    result.classList.add("loading");  // ⬅️ 添加加载动画
+    loading.style.display = "block"; // 显示加载动画
 
     try {
-        // 3️⃣ 发送请求到后端服务器
+        // 4️⃣ 发送请求到后端服务器
         const response = await fetch("/generate", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -26,40 +30,23 @@ async function generateEssay() {
         });
 
         const data = await response.json();
-        result.innerHTML = `<p>${data.essay ? data.essay : "生成失败，请重试！"}</p>`;
 
-        // 4️⃣ 新增功能：一键复制
-        const copyButton = document.createElement('button');
-        copyButton.innerText = "📋 复制到剪贴板";
-        copyButton.style.margin = "5px";
-        copyButton.onclick = () => {
-            navigator.clipboard.writeText(data.essay || "");
-            alert("已复制到剪贴板！");
-        };
-        result.appendChild(copyButton);
-
-        // 5️⃣ 新增功能：保存为TXT文件
-        const saveButton = document.createElement('button');
-        saveButton.innerText = "💾 保存为TXT";
-        saveButton.style.margin = "5px";
-        saveButton.onclick = () => {
-            const blob = new Blob([data.essay || ""], { type: "text/plain" });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement("a");
-            link.href = url;
-            link.download = `${name}-${topic}-小作文.txt`;
-            link.click();
-            URL.revokeObjectURL(url);
-        };
-        result.appendChild(saveButton);
+        // 5️⃣ 判断返回结果
+        if (response.ok && data.essay) {
+            result.innerText = data.essay;
+        } else {
+            result.innerText = `🚨 生成失败: ${data.error || "未知错误，请重试"}`;
+        }
 
     } catch (error) {
         result.innerText = "⚡ 请求失败，请检查网络！";
         console.error("生成失败:", error);
 
     } finally {
-        // 6️⃣ 恢复按钮状态
+        // 6️⃣ 恢复按钮状态 & 关闭加载动画
         button.disabled = false;
         button.innerText = "生成小作文";
+        result.classList.remove("loading");  // ⬅️ 移除加载动画
+        loading.style.display = "none";  // 隐藏加载动画
     }
 }

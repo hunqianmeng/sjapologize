@@ -11,8 +11,8 @@
         <h1>📝 高程小作文生成器</h1>
 
         <!-- 输入区域 -->
-        <input type="text" id="name" placeholder="请输入您的名字">
-        <input type="text" id="studentId" placeholder="请输入学号">
+        <input type="text" id="name" placeholder="请输入您的名字" autocomplete="off">
+        <input type="text" id="studentId" placeholder="请输入学号" autocomplete="off">
         
         <!-- 选择主题 -->
         <label>🎯 请选择主题：</label>
@@ -36,6 +36,9 @@
         <!-- 输出结果 -->
         <h2>生成的小作文：</h2>
         <p id="result"></p>
+
+        <!-- 加载指示器 -->
+        <div id="loading" style="display:none;">🌀 正在生成，请稍等...</div>
     </div>
 
     <script src="script.js"></script>
