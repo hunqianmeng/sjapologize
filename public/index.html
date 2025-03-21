@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,27 +8,32 @@
 </head>
 <body>
     <div class="container">
-        <h1>高程小作文生成器</h1>
+        <h1>📝 高程小作文生成器</h1>
 
-        <input type="text" id="name" placeholder="请输入名字">
+        <!-- 输入区域 -->
+        <input type="text" id="name" placeholder="请输入您的名字">
         <input type="text" id="studentId" placeholder="请输入学号">
         
-        <label>请选择主题：</label>
+        <!-- 选择主题 -->
+        <label>🎯 请选择主题：</label>
         <select id="topic">
             <option value="请假">请假</option>
             <option value="道歉">道歉</option>
             <option value="抄袭检讨">抄袭检讨</option>
         </select>
 
-        <label>请选择语气：</label>
+        <!-- 选择语气 -->
+        <label>✨ 请选择语气：</label>
         <select id="tone">
             <option value="诚恳">诚恳</option>
             <option value="幽默">幽默</option>
             <option value="正式">正式</option>
         </select>
 
+        <!-- 提交按钮 -->
         <button onclick="generateEssay()">生成小作文</button>
 
+        <!-- 输出结果 -->
         <h2>生成的小作文：</h2>
         <p id="result"></p>
     </div>
