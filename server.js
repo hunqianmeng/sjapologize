@@ -9,16 +9,26 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static("public"));
 
+<<<<<<< HEAD
 
 app.post("/generate", async (req, res) => {
     const { name, studentId, topic, tone } = req.body;
 
 
+=======
+app.post("/generate", async (req, res) => {
+    const { name, studentId, topic, tone } = req.body;
+    
+>>>>>>> b23e82fe97a962f2a6894f1eb629a465bcf2ac8a
     if (!name || !studentId || !topic || !tone) {
         return res.status(400).json({ error: "缺少必要参数" });
     }
 
+<<<<<<< HEAD
     
+=======
+  
+>>>>>>> b23e82fe97a962f2a6894f1eb629a465bcf2ac8a
     const prompt = `${name}（学号${studentId}）因为${topic}，需要给沈坚写一篇小作文。请用“${tone}”的语气，生成一篇合适的作文不要在最后加时间。`;
 
     try {
@@ -37,10 +47,18 @@ app.post("/generate", async (req, res) => {
         });
 
         if (!response.ok) {
+<<<<<<< HEAD
+=======
+        
+>>>>>>> b23e82fe97a962f2a6894f1eb629a465bcf2ac8a
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         const data = await response.json();
+<<<<<<< HEAD
+=======
+     
+>>>>>>> b23e82fe97a962f2a6894f1eb629a465bcf2ac8a
         if (data.choices && data.choices[0] && data.choices[0].message) {
             res.json({ essay: data.choices[0].message.content });
         } else {
